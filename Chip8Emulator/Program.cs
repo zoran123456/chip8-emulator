@@ -9,6 +9,12 @@
             var cpu = new Chip8Cpu(memory);
             
             Console.WriteLine("Chip-8 CPU and memory initialized.");
+
+            // Run a few CPU cycles (no program loaded yet, just for demonstration)
+            for (int i = 0; i < 3; i++)
+            {
+                cpu.Cycle();
+            }
         }
     }
 }

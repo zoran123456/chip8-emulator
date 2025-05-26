@@ -53,11 +53,46 @@ namespace Chip8Emulator
         }
 
         /// <summary>
-        /// Executes one CPU cycle (fetch-decode-execute). To be implemented.
+        /// Executes one CPU cycle: fetch, decode, and execute an instruction.
         /// </summary>
         public void Cycle()
         {
-            // Implementation will be added in a future task.
+            // Fetch: Read two bytes from memory at PC and PC+1, combine into 16-bit opcode
+            byte highByte = Memory.ReadByte(PC);
+            byte lowByte = Memory.ReadByte((ushort)(PC + 1));
+            ushort opcode = (ushort)((highByte << 8) | lowByte);
+
+            // Advance PC by 2 (next instruction)
+            PC += 2;
+
+            // Decode: Extract opcode fields
+            int opHigh = (opcode & 0xF000) >> 12; // high nibble
+            int X = (opcode & 0x0F00) >> 8;       // second nibble
+            int Y = (opcode & 0x00F0) >> 4;       // third nibble
+            int NN = opcode & 0x00FF;             // lowest 8 bits
+            int N = opcode & 0x000F;              // lowest 4 bits
+            int NNN = opcode & 0x0FFF;            // lowest 12 bits
+
+            // Execute: Switch on high nibble (only structure for now)
+            switch (opHigh)
+            {
+                case 0x6:
+                    // 6XNN: Set V[X] = NN (to be implemented in Task 5)
+                    Console.WriteLine($"Opcode 6XNN detected: 0x{opcode:X4}");
+                    break;
+                case 0x7:
+                    // 7XNN: Add NN to V[X] (to be implemented in Task 5)
+                    Console.WriteLine($"Opcode 7XNN detected: 0x{opcode:X4}");
+                    break;
+                case 0x8:
+                    // 8XYN: Arithmetic/logical ops (to be implemented in Task 6)
+                    Console.WriteLine($"Opcode 8XYN detected: 0x{opcode:X4}");
+                    break;
+                default:
+                    // Not implemented or unknown opcode
+                    Console.WriteLine($"Unknown or unimplemented opcode: 0x{opcode:X4}");
+                    break;
+            }
         }
     }
 }
