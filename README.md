@@ -57,6 +57,105 @@ This project is intentionally minimal. You can extend it by:
 - Loading external ROM files.
 - Implementing timers and more advanced features.
 
+## TODO Features
+Here are detailed features that could be implemented to extend this emulator:
+
+### Opcode Implementation
+- **Complete the instruction set**: Implement all standard CHIP-8 opcodes:
+  - `0NNN`: Execute machine language subroutine
+  - `00E0`: Clear the screen
+  - `00EE`: Return from subroutine
+  - `1NNN`: Jump to address NNN
+  - `2NNN`: Execute subroutine at NNN
+  - `3XNN`: Skip if VX equals NN
+  - `4XNN`: Skip if VX doesn't equal NN
+  - `5XY0`: Skip if VX equals VY
+  - `8XY0`: Set VX to VY
+  - `8XY1`: Set VX to VX OR VY
+  - `8XY2`: Set VX to VX AND VY
+  - `8XY3`: Set VX to VX XOR VY
+  - `8XY5`: Subtract VY from VX
+  - `8XY6`: Right shift VX
+  - `8XY7`: Set VX to VY minus VX
+  - `8XYE`: Left shift VX
+  - `9XY0`: Skip if VX doesn't equal VY
+  - `ANNN`: Set index register I
+  - `BNNN`: Jump to address NNN + V0
+  - `CXNN`: Set VX to random number AND NN
+  - `DXYN`: Display/draw
+  - `EX9E`: Skip if key VX pressed
+  - `EXA1`: Skip if key VX not pressed
+  - `FX07`: Set VX to delay timer
+  - `FX0A`: Wait for key press
+  - `FX15`: Set delay timer to VX
+  - `FX18`: Set sound timer to VX
+  - `FX1E`: Add VX to I
+  - `FX29`: Set I to font sprite for character VX
+  - `FX33`: Store BCD representation of VX
+  - `FX55`: Store V0...VX in memory at I
+  - `FX65`: Fill V0...VX from memory at I
+
+### Graphics
+- Implement the 64x32 monochrome pixel display
+- Create a rendering system using a modern graphics library
+- Add support for sprite drawing and collision detection
+- Implement the font set (0-F hexadecimal characters)
+- Add optional upscaling for better visibility on modern displays
+- Implement configurable color schemes
+
+### Input System
+- Support for the 16-key hexadecimal keypad (0-9 and A-F)
+- Configurable keyboard mapping
+- Optional gamepad/controller support
+- Key event handling for real-time input
+
+### Timing and Sound
+- Implement the 60Hz delay timer for timing game events
+- Add the 60Hz sound timer for audio control
+- Implement a basic sound system for the buzzer tone
+- Add volume control and mute options
+- Ensure consistent timing across different hardware
+
+### Memory and Stack
+- Implement the stack for subroutine calls (typically 12-16 levels deep)
+- Add memory viewer/editor for debugging
+- Implement memory protection for reserved areas (0x000-0x1FF)
+
+### ROM Handling
+- Add support for loading external ROM files
+- Implement a ROM browser/selector
+- Add ROM information display (size, CRC, etc.)
+- Support for saving and loading emulator state
+
+### User Interface
+- Create a proper GUI with menus and controls
+- Add pause/resume functionality
+- Implement step-by-step execution for debugging
+- Add speed control (faster/slower than original)
+- Display register values and memory state in real-time
+
+### Debugging Tools
+- Implement a disassembler to view program code
+- Add breakpoint support
+- Provide register and memory inspection
+- Add logging of opcode execution
+- Visualization of the stack and program flow
+
+### Extensions and Enhancements
+- Support for Super CHIP-8 instructions
+- XO-CHIP enhancements
+- Custom instruction sets or extensions
+- High-resolution graphics modes
+- Multiple color support
+- Additional sound capabilities
+
+### Other Improvements
+- Configuration saving/loading
+- Performance optimizations
+- Screenshot and recording capabilities
+- Integration with CHIP-8 program repositories
+- Automated testing framework for opcodes
+
 ## Credits
 - Developed using both **OpenAI Deep Research** and **GitHub Copilot** for code generation, research, and best practices.
 
