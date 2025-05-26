@@ -77,16 +77,35 @@ namespace Chip8Emulator
             switch (opHigh)
             {
                 case 0x6:
-                    // 6XNN: Set V[X] = NN (to be implemented in Task 5)
-                    Console.WriteLine($"Opcode 6XNN detected: 0x{opcode:X4}");
+                    // 6XNN: LD Vx, byte
+                    // Set register V[X] = NN. Example: 0x6A05 sets V[10] = 0x05.
+                    V[X] = (byte)NN;
+                    Console.WriteLine($"Executed 6XNN (LD V{X:X}, 0x{NN:X2}): V[{X}] = {V[X]}");
                     break;
                 case 0x7:
-                    // 7XNN: Add NN to V[X] (to be implemented in Task 5)
-                    Console.WriteLine($"Opcode 7XNN detected: 0x{opcode:X4}");
+                    // 7XNN: ADD Vx, byte
+                    // Add NN to V[X] with 8-bit wraparound. Example: 0x7A05 adds 0x05 to V[10].
+                    V[X] = (byte)(V[X] + NN); // Wraps automatically as byte
+                    Console.WriteLine($"Executed 7XNN (ADD V{X:X}, 0x{NN:X2}): V[{X}] = {V[X]}");
                     break;
                 case 0x8:
-                    // 8XYN: Arithmetic/logical ops (to be implemented in Task 6)
-                    Console.WriteLine($"Opcode 8XYN detected: 0x{opcode:X4}");
+                    // 8XYN: Arithmetic/logical ops
+                    switch (N)
+                    {
+                        case 0x4:
+                            // 8XY4: ADD Vx, Vy
+                            // Adds V[Y] to V[X], sets VF to 1 if carry, else 0.
+                            // Example: if V1=200, V2=100, 0x8124 sets V1=44, VF=1.
+                            int sum = V[X] + V[Y];
+                            V[X] = (byte)sum;
+                            V[0xF] = (byte)(sum > 0xFF ? 1 : 0); // VF is carry flag
+                            Console.WriteLine($"Executed 8XY4 (ADD V{X:X}, V{Y:X}): V[{X}] = {V[X]}, VF = {V[0xF]}");
+                            break;
+                        default:
+                            // TODO: Other 8XY? instructions not implemented
+                            Console.WriteLine($"Opcode 8XY{N:X} not implemented: 0x{opcode:X4}");
+                            break;
+                    }
                     break;
                 default:
                     // Not implemented or unknown opcode
